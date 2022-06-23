@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>@yield('title')</title>
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
@@ -46,7 +46,25 @@
                     <a class="nav-link disabled">Disabled</a>
                   </li>
                 </ul>
-                <a href="/register" class="btn btn-success mx-2">Recruiter</a>
+                @auth
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Hi!, {{ auth()->user()->name }}
+                      </a>
+                      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><a class="dropdown-item" href="#">Your Ads</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                @endauth
+                @guest
+                  <a href="/register" class="btn btn-success mx-2">Register</a>
+                  <a href="/login" class="btn btn-danger mx-2">Login</a>
+                @endguest
                 <form class="d-flex" role="search">
                   <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                   <button class="btn btn-outline-success" type="submit">Search</button>
@@ -54,6 +72,17 @@
               </div>
             </div>
         </nav>
+
+        @if(session()->has('message'))
+          <div class="alert alert-primary mt-3" role="alert">
+             {{ session()->get('message') }}
+          </div>
+        @endif
+        @if(session()->has('error'))
+          <div class="alert alert-danger mt-3" role="alert">
+             {{ session()->get('error') }}
+          </div>
+        @endif
 
         @yield('content')
 

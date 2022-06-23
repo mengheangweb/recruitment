@@ -25,6 +25,16 @@
                       <label for="inputSalary" class="form-label">Salary</label>
                       <input type="number" name="salary" value="{{ old('salary') }}" class="form-control" id="inputSalary" aria-describedby="">
                     </div>
+                    <div class="mb-3">
+                        @foreach($tags as $tag)
+                            <div class="form-check">
+                                <input class="form-check-input" name="tag[]" type="checkbox" value="{{ $tag->id }}">
+                                <label class="form-check-label">
+                                {{ $tag->name }}
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <div class="mb-3">

@@ -3,7 +3,6 @@
 @section('content')
 <div class="p-5 mb-4 bg-light rounded-3">
   <div class="container-fluid py-5">
-    @php var_dump($errors) @endphp
       @if($errors->any())
           <div class="alert alert-danger" role="alert">
               Please fix following errors.

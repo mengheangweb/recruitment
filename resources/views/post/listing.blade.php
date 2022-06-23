@@ -6,12 +6,16 @@
 <div class="row">
     @foreach($listing as $post)
         <div class="col-md-3">
-            <div class="card mb-3" style="width: 18rem;">
-                <img src="https://logos-world.net/wp-content/uploads/2020/09/Heineken-Logo-1991-present.jpg" class="card-img-top p-3" alt="...">
+            <div class="card" style="width: 18rem;">
+                @if($post->company && $post->company->logo)
+                    <img src="{{ asset('storage/'. $post->company->logo) }}" class="card-img-top p-3" alt="...">
+                @else
+                    <img src="{{ asset('icon/no-logo.png') }}" class="card-img-top p-3" alt="...">
+                @endif
                 <div class="card-body">
                     <h5 class="card-title">{{ $post->title }}</h5>
                     <p>Salary: {{ $post->salary }}</p>
-                    <a href="#" class="btn btn-primary mt-2">Apply Now</a>
+                    <a href="/listing/show/{{ $post->id }}" class="btn btn-primary mt-2">Apply Now</a>
                 </div>
             </div>
         </div>

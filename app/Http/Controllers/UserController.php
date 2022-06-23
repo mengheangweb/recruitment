@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Hash;
 use App\Models\User;
 use App\Models\Company;
+use Auth;
 
 class UserController extends Controller
 {
@@ -31,16 +32,53 @@ class UserController extends Controller
                     'password' => Hash::make($request->password),
                 ]);
 
-        $logo = $request->logo->store('public/logo');
+        if($request->logo){
+            $logo = $request->logo->store('logo');
+        }else{
+            $logo = null;
+        }
 
         $company = [
-                    'name' => $request->name,
+                    'name' => $request->company_name,
                     'logo' => $logo,
                     'profile' => $request->profile,
                 ];
 
         $user->company()->create($company);
 
-        return redirect()->back();
+        Auth::login($user);
+
+        return redirect()->back()->with('message', 'You have successfully registered.');
+    }
+
+    public function formLogin()
+    {
+        return view('user.login');
+    }
+
+    public function doLogin(Request $request)
+    {
+        $credential = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required']
+        ]);
+
+        if(Auth::attempt($credential)){
+            $request->session()->regenerate();
+
+            return redirect('/');
+        }
+
+        return redirect()->back()->withError('Incorrect username or password');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 }

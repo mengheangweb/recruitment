@@ -22,9 +22,14 @@ Route::get('/',  [HomeController::class, 'index']);
 Route::get('home', [HomeController::class, 'index']);
 Route::get('contact', [PageController::class, 'contact']);
 Route::get('listing', [PostController::class, 'index']);
-Route::get('listing/post', [PostController::class, 'post']);
+Route::get('listing/show/{id}', [PostController::class, 'show']);
+Route::get('listing/post', [PostController::class, 'post'])->middleware('auth');
 Route::post('listing/create', [PostController::class, 'store'])->name('store-post');
 
 Route::get('register', [UserController::class, 'register'])->name('registration');
 Route::post('store-register', [UserController::class, 'store'])->name('store-registration');
+Route::get('logout', [UserController::class, 'logout'])->name('logout');
+Route::get('login', [UserController::class, 'formLogin'])->name('login');
+Route::post('do-login', [UserController::class, 'doLogin'])->name('do-login');
+
 
