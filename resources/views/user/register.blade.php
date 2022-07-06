@@ -15,7 +15,12 @@
                 <h1 class="display-6 fw-bold mb-3">Personal Info</h1>
                   <div class="mb-3">
                     <label for="inputName" class="form-label">Name</label>
-                    <input type="text" name="name" value="{{ old('name') }}" class="form-control" id="inputTitle" aria-describedby="">
+                    <input type="text"  name="name" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror" id="inputTitle" aria-describedby="">
+                    @error('name')
+                            <div class="invalid-feedback">
+                                {{ $errors->first('name') }}
+                            </div>
+                        @enderror
                   </div>
                   <div class="mb-3">
                     <label for="inputEmail" class="form-label">Email</label>

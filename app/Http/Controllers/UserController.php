@@ -24,6 +24,10 @@ class UserController extends Controller
             'company_name' => 'required|min:3|max:50',
             'profile' => 'required',
             'logo' => 'image'
+        ],[
+            'name.required' => __('auth.register_name_msg')
+        ], [
+            'name' => __('auth.name')
         ]);
 
         $user = User::create([
