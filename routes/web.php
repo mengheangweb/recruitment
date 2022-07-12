@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ConfigController;
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,5 +48,14 @@ Route::middleware('locale')->group(function() {
 
 });
 
+Route::prefix('admin')->group(function() {
+    Route::get('logout', [AdminController::class, 'logout'])->name('admin.logout');
+    Route::get('login', [AdminController::class, 'formLogin'])->name('admin.login');
+    Route::post('do-login', [AdminController::class, 'doLogin'])->name('admin.do-login');
 
-Route::get('/admin', [DashboardController::class, 'index']);
+   // Route::middleware('admin')->group(function() {
+        Route::get('/', [DashboardController::class, 'index']);
+        Route::get('dashboard', [DashboardController::class, 'index']);
+  //  });
+});
+
