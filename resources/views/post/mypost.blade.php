@@ -26,7 +26,7 @@
                         @foreach($posts as $post)
                             <tr>
                                 <td>{{ $post->id }}</td>
-                                <td>{{ $post->title }}</td>
+                                <td>{{ $post->title }} <br/> <small class="badge bg-danger post-{{ $post->id }} ">{{ $post->status }}</small></td>
                                 <td>{{ $post->salary }}</td>
                                 <td>{{ $post->hiring }}</td>
                                 <td>

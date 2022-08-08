@@ -51,7 +51,7 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 Companies
                             </a>
-                            <a class="nav-link" href="charts.html">
+                            <a class="nav-link" href="/admin/post">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 Posts
                             </a>

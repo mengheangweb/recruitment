@@ -26,7 +26,7 @@ class AdminController extends Controller
             return redirect('/admin/dashboard');
         }
 
-        return redirect()->back()->withError('Incorrect username or password');
+        return redirect()->back()->withError('Your credential is incorrect');
     }
 
     public function logout(Request $request)

@@ -7,6 +7,9 @@ use Hash;
 use App\Models\User;
 use App\Models\Company;
 use Auth;
+use App\Mail\Welcome;
+use App\Mail\MD_Welcome;
+use Mail;
 
 class UserController extends Controller
 {
@@ -52,6 +55,8 @@ class UserController extends Controller
 
         Auth::login($user);
 
+        Mail::to($user->email)->later(now()->addMinutes(1), new MD_Welcome());
+
         return redirect()->back()->with('message', 'You have successfully registered.');
     }
 
@@ -70,7 +75,7 @@ class UserController extends Controller
         if(Auth::attempt($credential)){
             $request->session()->regenerate();
 
-            return redirect('/');
+            return redirect('/home');
         }
 
         return redirect()->back()->withError('Incorrect username or password');

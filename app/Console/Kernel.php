@@ -16,6 +16,10 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->command('post:trash')
+        ->everyMinute()
+        ->timezone('Asia/Phnom_Penh')
+        ->sendOutputTo('test.txt');	
     }
 
     /**

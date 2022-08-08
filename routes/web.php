@@ -6,8 +6,10 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ConfigController;
+use App\Http\Controllers\NotificationController;
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\PostController as AdminPostController;
 use App\Http\Controllers\Admin\AdminController;
 
 /*
@@ -21,6 +23,8 @@ use App\Http\Controllers\Admin\AdminController;
 |
 */
 Route::middleware('locale')->group(function() {
+
+    Route::get('/backup',  [HomeController::class, 'backup']);
 
     Route::get('/',  [HomeController::class, 'index']);
 
@@ -38,6 +42,9 @@ Route::middleware('locale')->group(function() {
         Route::patch('listing/update/{id}', [PostController::class, 'update'])->name('update-post');
         Route::get('listing/delete/{id}', [PostController::class, 'delete']);
         Route::get('listing/restore/{id}', [PostController::class, 'restore']);
+
+        Route::get('notification', [NotificationController::class, 'list']);
+        Route::get('notification/{id}', [NotificationController::class, 'mark']);
     });
 
     Route::get('register', [UserController::class, 'register'])->name('registration');
@@ -53,9 +60,11 @@ Route::prefix('admin')->group(function() {
     Route::get('login', [AdminController::class, 'formLogin'])->name('admin.login');
     Route::post('do-login', [AdminController::class, 'doLogin'])->name('admin.do-login');
 
-   // Route::middleware('admin')->group(function() {
+   Route::middleware('auth:admin')->group(function() {
         Route::get('/', [DashboardController::class, 'index']);
         Route::get('dashboard', [DashboardController::class, 'index']);
-  //  });
+        Route::get('post', [AdminPostController::class, 'index']);
+        Route::get('response/{id}/{status}', [AdminPostController::class, 'response']);
+   });
 });
 
